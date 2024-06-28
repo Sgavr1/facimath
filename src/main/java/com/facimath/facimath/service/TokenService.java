@@ -1,6 +1,8 @@
 package com.facimath.facimath.service;
 
 import com.facimath.facimath.entity.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,16 +15,22 @@ public class TokenService {
 
     public String generation(User user) {
         return Jwts.builder()
-                .claim("user", user)
+                .claim("firstName", user.getFirstName())
+                .claim("lastName", user.getLastName())
+                .claim("id", user.getId())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
     public User getUser(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody().get("user", User.class);
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+
+        User user = new User();
+        user.setFirstName(claims.getBody().get("firstName", String.class));
+        user.setLastName(claims.getBody().get("lastName", String.class));
+        user.setId(claims.getBody().get("id", Long.class));
+
+        return user;
     }
 
     public boolean validate(String token) {
