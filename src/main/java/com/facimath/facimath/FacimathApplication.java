@@ -9,5 +9,4 @@ public class FacimathApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FacimathApplication.class, args);
 	}
-
 }
