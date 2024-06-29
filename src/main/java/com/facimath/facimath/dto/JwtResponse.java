@@ -4,9 +4,9 @@ import com.facimath.facimath.entity.User;
 
 public class JwtResponse {
     private String token;
-    private User user;
+    private UserDto user;
 
-    public JwtResponse(String token, User user) {
+    public JwtResponse(String token, UserDto user) {
         this.token = token;
         this.user = user;
     }
@@ -19,11 +19,11 @@ public class JwtResponse {
         this.token = token;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 }

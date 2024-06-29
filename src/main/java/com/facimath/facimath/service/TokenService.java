@@ -1,5 +1,6 @@
 package com.facimath.facimath.service;
 
+import com.facimath.facimath.dto.UserDto;
 import com.facimath.facimath.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -13,7 +14,7 @@ public class TokenService {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generation(User user) {
+    public String generation(UserDto user) {
         return Jwts.builder()
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())
@@ -22,10 +23,10 @@ public class TokenService {
                 .compact();
     }
 
-    public User getUser(String token) {
+    public UserDto getUser(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 
-        User user = new User();
+        UserDto user = new UserDto();
         user.setFirstName(claims.getBody().get("firstName", String.class));
         user.setLastName(claims.getBody().get("lastName", String.class));
         user.setId(claims.getBody().get("id", Long.class));

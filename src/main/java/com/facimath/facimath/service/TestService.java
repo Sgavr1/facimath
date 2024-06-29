@@ -1,30 +1,36 @@
 package com.facimath.facimath.service;
 
 import com.facimath.facimath.dto.TestCreateDto;
+import com.facimath.facimath.dto.TestDto;
+import com.facimath.facimath.dto.UserDto;
 import com.facimath.facimath.entity.Test;
 import com.facimath.facimath.entity.User;
+import com.facimath.facimath.mapper.TestMapper;
 import com.facimath.facimath.repository.TestRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TestService {
     private final TestRepository repository;
+    private final TestMapper mapper;
 
-    public TestService(TestRepository repository) {
+    public TestService(TestRepository repository, TestMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public List<Test> getAllTest(User user) {
-        return repository.getAllByUser(user.getId());
+    public List<TestDto> getAllTest(UserDto user) {
+        return repository.getAllByUser(user.getId()).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    public List<Test> getAllNotFinish(User user) {
-        return repository.getAllNotFinishByUser(user.getId());
+    public List<TestDto> getAllNotFinish(UserDto user) {
+        return repository.getAllNotFinishByUser(user.getId()).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    public Test add(TestCreateDto dto, long id){
+    public TestDto add(TestCreateDto dto, long id){
         User user = new User();
         user.setId(id);
 
@@ -33,6 +39,6 @@ public class TestService {
         test.setStatus(dto.isStatus());
         test.setUser(user);
 
-        return repository.save(test);
+        return mapper.toDto(repository.save(test));
     }
 }

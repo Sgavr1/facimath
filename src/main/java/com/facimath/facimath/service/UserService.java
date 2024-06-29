@@ -1,7 +1,9 @@
 package com.facimath.facimath.service;
 
 import com.facimath.facimath.dto.UserCreateDto;
+import com.facimath.facimath.dto.UserDto;
 import com.facimath.facimath.entity.User;
+import com.facimath.facimath.mapper.UserMapper;
 import com.facimath.facimath.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,21 +12,23 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository repository;
+    private final UserMapper mapper;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, UserMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
-    public User authorization(String login, String password) {
+    public UserDto authorization(String login, String password) throws RuntimeException {
         Optional<User> user = repository.findByLoginAndPassword(login, password);
         if (user.isPresent()) {
-            return user.get();
+            return mapper.toDto(user.get());
         } else {
             throw new RuntimeException("User not found login: " + login + " password: " + password);
         }
     }
 
-    public User registration(UserCreateDto dto) {
+    public UserDto registration(UserCreateDto dto) {
         User user = new User();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
@@ -33,6 +37,6 @@ public class UserService {
 
         user = repository.save(user);
 
-        return user;
+        return mapper.toDto(user);
     }
 }

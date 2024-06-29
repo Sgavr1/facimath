@@ -1,7 +1,7 @@
 package com.facimath.facimath.controller;
 
 import com.facimath.facimath.dto.JwtResponse;
-import com.facimath.facimath.entity.User;
+import com.facimath.facimath.dto.UserDto;
 import com.facimath.facimath.service.TokenService;
 import com.facimath.facimath.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class AuthorizationController {
     @GetMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestParam(name = "login") String login, @RequestParam(name = "password") String password) {
         try {
-            User user = userService.authorization(login, password);
+            UserDto user = userService.authorization(login, password);
 
             String token = tokenService.generation(user);
 
