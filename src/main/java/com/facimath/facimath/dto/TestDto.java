@@ -3,16 +3,14 @@ package com.facimath.facimath.dto;
 public class TestDto {
     private long id;
     private String text;
-    private boolean status;
 
     public TestDto() {
 
     }
 
-    public TestDto(long id, String text, boolean status) {
+    public TestDto(long id, String text) {
         this.id = id;
         this.text = text;
-        this.status = status;
     }
 
     public long getId() {
@@ -29,13 +27,5 @@ public class TestDto {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 }

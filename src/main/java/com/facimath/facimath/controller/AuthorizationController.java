@@ -18,7 +18,6 @@ public class AuthorizationController {
     @Autowired
     private TokenService tokenService;
 
-    @CrossOrigin(origins = "http://localhost:4200/login")
     @GetMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestParam(name = "login") String login, @RequestParam(name = "password") String password) {
         try {

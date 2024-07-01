@@ -26,17 +26,11 @@ public class TestService {
         return repository.getAllByUser(user.getId()).stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    public List<TestDto> getAllNotFinish(UserDto user) {
-        return repository.getAllNotFinishByUser(user.getId()).stream().map(mapper::toDto).collect(Collectors.toList());
-    }
-
     public TestDto add(TestCreateDto dto, long id){
         User user = new User();
         user.setId(id);
 
-        Test test = new Test();
-        test.setTest(dto.getText());
-        test.setStatus(dto.isStatus());
+        Test test = mapper.toEntity(dto);
         test.setUser(user);
 
         return mapper.toDto(repository.save(test));

@@ -11,7 +11,6 @@ public class TestMapper {
         Test entity = new Test();
         entity.setId(dto.getId());
         entity.setTest(dto.getText());
-        entity.setStatus(dto.isStatus());
 
         return entity;
     }
@@ -19,12 +18,11 @@ public class TestMapper {
     public Test toEntity(TestCreateDto dto){
         Test entity = new Test();
         entity.setTest(dto.getText());
-        entity.setStatus(dto.isStatus());
 
         return entity;
     }
 
     public TestDto toDto(Test entity){
-        return new TestDto(entity.getId(), entity.getText(), entity.isStatus());
+        return new TestDto(entity.getId(), entity.getText());
     }
 }

@@ -30,18 +30,6 @@ public class TestController {
         return ResponseEntity.badRequest().body(null);
     }
 
-    @GetMapping("/not/finish/tests")
-    public ResponseEntity<List<TestDto>> getAllNotFinisTest(@RequestHeader("Authorization") String authorization) {
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            String token = authorization.substring(7);
-            if (tokenService.validate(token)) {
-                return ResponseEntity.ok(testService.getAllNotFinish(tokenService.getUser(token)));
-            }
-        }
-
-        return ResponseEntity.badRequest().body(null);
-    }
-
     @PostMapping("/add/test")
     public ResponseEntity<TestDto> addTest(@RequestHeader("Authorization") String authorization, @RequestBody TestCreateDto test){
         if (authorization != null && authorization.startsWith("Bearer ")) {

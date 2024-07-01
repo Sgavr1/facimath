@@ -8,6 +8,5 @@ CREATE TABLE users (
 CREATE TABLE tests (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id),
-    test TEXT NOT NULL,
-    status BOOLEAN NOT NULL
+    test TEXT NOT NULL
 );

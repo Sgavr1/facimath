@@ -11,7 +11,4 @@ import java.util.List;
 public interface TestRepository extends JpaRepository<Test, Long> {
     @Query(value = "Select t From Test t Where user.id = :id")
     List<Test> getAllByUser(Long id);
-
-    @Query(value = "Select t From Test t Where user.id = :id And status = True")
-    List<Test> getAllNotFinishByUser(Long id);
 }
